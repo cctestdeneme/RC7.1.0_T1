@@ -49,7 +49,7 @@ export const useItemData = (
 			time,
 			badges,
 			avatar: AvatarTemplate && <AvatarTemplate {...room} />,
-			subtitle: message,
+			subtitle: message ? <span className='message-body--unstyled' dangerouslySetInnerHTML={{ __html: message }} /> : null,
 		}),
 		[AvatarTemplate, badges, highlighted, icon, message, openedRoom, room, t, time],
 	);
