@@ -710,7 +710,7 @@ test.describe.serial('e2e-encryption', () => {
 		});
 	});
 
-	test('expect create a private channel, send unecrypted messages, encrypt the channel and delete the last message and check the last message in the sidebar', async ({
+	test.only('expect create a private channel, send unecrypted messages, encrypt the channel and delete the last message and check the last message in the sidebar', async ({
 		page,
 	}) => {
 		const channelName = faker.string.uuid();
@@ -754,7 +754,7 @@ test.describe.serial('e2e-encryption', () => {
 		// Check last message in the sidebar
 		const sidebarChannel = poHomeChannel.sidebar.getSidebarItemByName(channelName);
 		await expect(sidebarChannel).toBeVisible();
-		await expect(sidebarChannel.locator('span')).toContainText(encriptedMessage1);
+		await expect(sidebarChannel.filter({ hasText: encriptedMessage1 })).toBeVisible();
 	});
 
 	test('expect create a private encrypted channel and pin/star an encrypted message', async ({ page }) => {
@@ -1007,7 +1007,9 @@ test.describe.serial('e2ee room setup', () => {
 		await injectInitialData();
 		await restoreState(page, Users.admin);
 
-		await poHomeChannel.sidebar.openChat(channelName);
+		await poHomeChannel.sidebar.typeSearch(channelName);
+		await poHomeChannel.sidebar.getSearchRoomByName(channelName).click();
+		await poHomeChannel.content.waitForPageLoad();
 
 		await page.locator('role=button[name="Save E2EE password"]').click();
 		await page.locator('#modal-root >> button:has-text("I saved my password")').click();

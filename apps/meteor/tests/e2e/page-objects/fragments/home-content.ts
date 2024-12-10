@@ -410,4 +410,9 @@ export class HomeContent {
 
 		await expect(this.page.getByRole('main').getByRole('list', { name: 'Message list' })).not.toHaveAttribute('aria-busy', 'true');
 	}
+
+	async waitForPageLoad(): Promise<void> {
+		await this.page.waitForSelector('main');
+		await this.page.waitForSelector('main >> role=heading');
+	}
 }
