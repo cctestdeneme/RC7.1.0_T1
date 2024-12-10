@@ -1111,7 +1111,7 @@ API.v1.addRoute(
 			const { offset: skip, count: limit } = await getPaginationItems(this.queryParams);
 			const { sort = {} } = await this.parseJsonQuery();
 
-			const { status, filter, rolesOrder = ['leader', 'owner'] } = this.queryParams;
+			const { status, filter, rolesOrder = ['owner', 'moderator'] } = this.queryParams;
 
 			const { members, total } = await findUsersOfRoomOrderedByRole({
 				rid: findResult._id,
